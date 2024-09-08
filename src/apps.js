@@ -9,7 +9,13 @@ function selecionarCampeao(nome) {
     return;
   }
   localStorage.setItem("campeaoSelecionado", JSON.stringify(campeao)); // Salvar o campeão no localStorage
-  window.location.href = "/indexhistory.html"; // Redirecionar para a página da história
+
+  // Verificar se os dados do campeão estão completos antes de redirecionar
+  if (campeao.nome && campeao.habilidades && campeao.energia) {
+    window.location.href = "/indexhistory.html";
+  } else {
+    alert("Erro: Dados do campeão estão incompletos.");
+  }
 }
 
 // Função para redirecionar para a página de criação de personagem
@@ -201,7 +207,13 @@ function comecarAventura() {
   };
 
   localStorage.setItem("campeaoSelecionado", JSON.stringify(personagemCriado));
-  window.location.href = "/indexhistory.html"; // Redirecionar para a página de história
+
+  // Verificar se os dados do personagem estão completos antes de redirecionar
+  if (personagemCriado.nome && personagemCriado.habilidades && personagemCriado.energia) {
+    window.location.href = "/indexhistory.html";
+  } else {
+    alert("Erro: Dados do personagem incompletos.");
+  }
 }
 
 // Inicializar a criação de personagem ao carregar a página
