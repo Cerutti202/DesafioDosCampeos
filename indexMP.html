@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Criar Seu Personagem</title>
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="card-papiro">
+        <!-- Título central -->
+        <h1 class="titulo">CRIANDO SEU PERSONAGEM</h1>
+
+        <!-- Campo para o nome do campeão -->
+        <div class="input-group">
+          <label for="nome">NOME DO PERSONAGEM</label>
+          <input type="text" id="nome" placeholder="Digite o nome" />
+        </div>
+
+        <!-- Atributos: Habilidade, Energia e Sorte -->
+        <div class="atributos-container">
+          <div class="atributo-item">
+            <label>HABILIDADE</label>
+            <select id="habilidade"></select> <!-- JS preencherá -->
+          </div>
+          <div class="atributo-item">
+            <label>ENERGIA</label>
+            <select id="energia"></select> <!-- JS preencherá -->
+          </div>
+          <div class="atributo-item">
+            <label>SORTE</label>
+            <select id="sorte"></select> <!-- JS preencherá -->
+          </div>
+        </div>
+
+        <!-- Números sorteados para os atributos -->
+        <div class="dados-container">
+          <div class="esquerda">
+            <h3>NÚMEROS SORTEADOS</h3>
+            <div id="numerosSorteados" class="numeros-sorteados">
+              <!-- JS irá preencher -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Equipamentos -->
+        <div class="equipamento-container">
+          <h3>EQUIPAMENTO</h3>
+          <ul id="listaEquipamentos">
+            <!-- JS irá preencher a lista de equipamentos -->
+          </ul>
+        </div>
+
+        <!-- Botão para iniciar a aventura -->
+        <button class="btn-aventura" onclick="comecarAventura()">
+          COMEÇAR AVENTURA
+        </button>
+      </div>
+    </div>
+
+    <!-- Importar scripts JS -->
+    <script src="/src/dados.js"></script>
+    <script src="/src/apps.js"></script>
+  </body>
+</html>

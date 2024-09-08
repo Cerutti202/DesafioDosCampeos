@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Batalha</title>
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <div class="container batalha-container">
+      <div class="card-papiro">
+        <h1 class="titulo">LUTA</h1>
+
+        <!-- Área de batalha entre Campeão e Criatura -->
+        <div class="luta-container">
+          <!-- Campeão -->
+          <div class="campeao-container">
+            <img
+              src="/assets/warrior1.svg"
+              alt="Campeão"
+              class="luta-imagem"
+            />
+            <div class="status-campeao">
+              <p>Energia: <span id="energiaCampeao"></span></p>
+              <p>Habilidade: <span id="habilidadeCampeao"></span></p>
+            </div>
+            <div class="acoes-container">
+              <button onclick="atacar()">Atacar</button>
+              <button onclick="usarSorte()">Sorte</button>
+              <button onclick="fugir()">Fugir</button>
+            </div>
+          </div>
+
+          <!-- Indicador de combate -->
+          <div class="luta-vs">
+            <p id="forcaCampeao">N</p>
+            <p>X</p>
+            <p id="forcaCriatura">N</p>
+          </div>
+
+          <!-- Criatura -->
+          <div class="criatura-container">
+            <img
+              src=""
+              alt="Criatura"
+              id="imagemCriatura"
+              class="luta-imagem"
+            />
+            <div class="status-criatura">
+              <p>Energia: <span id="energiaCriatura"></span></p>
+              <p>Habilidade: <span id="habilidadeCriatura"></span></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Importar scripts JS -->
+    <script src="/src/dados.js"></script>
+    <script src="/src/apps.js"></script>
+  </body>
+</html>

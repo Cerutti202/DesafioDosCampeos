@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Seleção de Campeão</title>
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <div class="container-choice-champs">
+      <div class="select-champion-container">
+        <h1 class="select-title">SELECIONE UM CAMPEÃO</h1>
+        <div class="card-container">
+          <div class="card">
+            <img
+              src="/assets/warrior1.svg"
+              alt="Campeão 1"
+            />
+            <button class="champion-button" onclick="selecionarCampeao('KORA')">
+              KORA
+            </button>
+          </div>
+          <div class="card">
+            <img
+              src="/assets/warrior2.svg"
+              alt="Campeão 2"
+            />
+            <button
+              class="champion-button"
+              onclick="selecionarCampeao('GROTY')"
+            >
+              GROTY
+            </button>
+          </div>
+          <div class="card">
+            <img
+              src="/assets/warrior3.svg"
+              alt="Criar Personagem"
+            />
+            <button class="champion-button" onclick="criarPersonagem()">
+              CRIAR O SEU
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="/src/dados.js"></script>
+    <script src="/src/apps.js"></script>
+  </body>
+</html>

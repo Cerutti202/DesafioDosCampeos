@@ -1,0 +1,479 @@
+:root {
+  --primary-color: #413024;
+  --secondary-color: #f2f2f2;
+  --font-family: "Bebas Neue", sans-serif;
+  --font-size-heading: 48px;
+  --font-size-button: 20px;
+  --font-size-description: 30px;
+  --padding-container: 50px;
+  --svg-width: 30%;
+  --button-hover-color: #555;
+}
+* {
+  font-family: var(--font-family);
+}
+body {
+  margin: 0;
+  font-family: var(--font-family);
+  color: var(--secondary-color);
+}
+li {
+  list-style-type: none;
+}
+a {
+  text-decoration: none;
+  color: white;
+}
+
+button {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  width: 45%;
+  display: inline-block;
+  font-size: var(--font-size-button);
+  border-radius: 30px;
+}
+
+button:hover,
+.champion-button:hover,
+.choice-btn:hover {
+  background-color: var(--button-hover-color);
+}
+
+/* Página Inicial (index.html) */
+.container {
+  display: flex;
+  height: 100vh;
+  align-items: center;
+  /* justify-content: space-between; */
+  padding: var(--padding-container);
+  background-image: url("/assets/background.svg");
+  background-repeat: no-repeat;
+  justify-content: center;
+}
+
+.svg {
+  width: var(--svg-width);
+}
+
+.texto {
+  text-align: center;
+}
+
+.titulo_home {
+  font-size: var(--font-size-heading);
+  margin-bottom: 20px;
+}
+
+.descricao_home {
+  font-size: var(--font-size-description);
+  margin-bottom: 20px;
+  text-align: center;
+  padding: 25px;
+}
+
+/* Página Seleção de Campeões (indexCS.html) */
+.container-choice-champs {
+  background-image: url("/assets/background.svg");
+  background-repeat: no-repeat;
+  display: flex;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-container);
+}
+
+.select-champion-container {
+  text-align: center;
+  padding: 20px;
+  width: 100%;
+  height: 100%;
+  background-image: url("/assets/papiro.svg");
+  background-repeat: no-repeat;
+}
+
+.select-title {
+  font-size: var(--font-size-heading);
+  color: var(--primary-color);
+  margin-bottom: 20px;
+  display: inline-block;
+  padding: 10px;
+}
+
+.card-container {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+}
+
+.card {
+  padding: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 200px;
+  height: auto;
+  text-align: center;
+}
+
+.card img {
+  width: 200px;
+  height: 400px;
+}
+
+.champion-button {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 25px;
+  font-size: var(--font-size-button);
+  cursor: pointer;
+  margin-top: 10px;
+  width: 100%;
+}
+/* Página Aventura (indexhistory.html) */
+/* Sidebar */
+.sidebar {
+  position: fixed;
+  left: -250px;
+  top: 0;
+  width: 250px;
+  height: 100%;
+  background-color: var(--primary-color);
+  border-right: 2px solid var(--primary-color);
+  padding: 20px;
+  transition: left 0.3s ease;
+}
+
+.sidebar.active {
+  left: 0;
+}
+
+.close-btn,
+.open-btn {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.open-btn {
+  position: fixed;
+  width: 100px;
+  left: 10px;
+  top: 90%;
+  transform: translateY(-50%);
+  border-radius: 5px;
+}
+.serchbt {
+  padding-left: 50px;
+}
+
+.champion-info {
+  text-align: center;
+}
+
+.champion-img {
+  width: 100px;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+.champion-stats {
+  display: flex;
+  justify-content: space-around;
+  margin: 10px 0;
+}
+
+.stat {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.heart {
+  height: 20px;
+  width: 20px;
+  border: 2px solid red;
+  background-image: url("/assets/energia.svg");
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.attack {
+  height: 20px;
+  width: 20px;
+  border: 2px solid black;
+  background-image: url("/assets/habilidade.svg");
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.defense {
+  height: 20px;
+  width: 20px;
+  border: 2px solid blue;
+  background-image: url("/assets/sorte.svg");
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.champion-items {
+  margin-top: 10px;
+}
+
+.champion-items ul {
+  list-style: none;
+  padding: 0;
+}
+
+.champion-items li {
+  margin: 5px 0;
+  font-size: 16px;
+}
+
+/* Main content */
+.backgorund {
+  background-image: url("/assets/background.svg");
+  background-repeat: no-repeat;
+  display: flex;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-container);
+}
+.main-content {
+  padding: 20px;
+  margin-left: 60px;
+  background-image: url("/assets/papiro.svg");
+  background-repeat: no-repeat;
+  background-repeat: space;
+  /* height: 100%;
+  width: 100%; */
+}
+
+.story-title {
+  font-size: var(--font-size-heading);
+  color: var(--primary-color);
+  text-align: center;
+}
+
+.story-text {
+  font-size: var(--font-size-description);
+  margin: 20px 0;
+  text-align: center;
+  color: var(--primary-color);
+  background-color: var(--secondary-color);
+  border-color: var(--primary-color);
+  border: solid;
+  width: 95%;
+}
+
+.choices {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.choice-btn {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 25px;
+  font-size: var(--font-size-button);
+  cursor: pointer;
+  width: auto;
+}
+
+/* Main card styled like old parchment */
+.card-papiro {
+  background: url("/assets/papiro.svg");
+  background-size: contain;
+  padding: 20px;
+  border-radius: 15px;
+  color: var(--primary-color);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Title styling */
+.titulo {
+  font-size: 36px;
+  color: #2e2e2e;
+  text-align: center;
+  margin-bottom: 20px;
+
+  padding: 10px;
+}
+
+/* Input field */
+.input-group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.input-group label {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.input-group input {
+  width: 60%;
+  padding: 10px;
+  border-radius: 30px;
+  background-color: #ff000000;
+}
+select {
+  padding: 10px;
+  font-size: 16px;
+  margin-top: 10px;
+  width: 76%;
+  background-color: #ff000000;
+  border-radius: 30px;
+}
+/* Atributos (Habilidade, Energia, Sorte) styling */
+.atributos-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.atributo-item {
+  text-align: center;
+}
+
+.atributo-item label {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+select {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+/* Dados sorteados */
+.dados-container {
+  display: flex;
+  text-align: center;
+  margin-bottom: 20px;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+  justify-content: space-around;
+}
+.dados-svg img {
+  width: 100px;
+}
+.numeros-sorteados {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 10px 0;
+}
+
+.numeros-sorteados .numero-box {
+  padding: 10px;
+  font-size: 24px;
+  font-weight: bold;
+}
+.separa {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: nowrap;
+  flex-direction: row;
+}
+/* Equipamento section */
+.equipamento-container {
+  text-align: center;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+/* Adventure button */
+.btn-aventura {
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+  padding: 15px 20px;
+  border-radius: 25px;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  display: block;
+  margin: 0 auto;
+}
+
+.btn-aventura:hover {
+  background-color: #1b1b1b;
+}
+
+/* Estilos para a página de batalha */
+.batalha-container {
+  text-align: center;
+}
+
+.luta-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.luta-imagem {
+  width: 150px;
+  height: auto;
+}
+
+.status-campeao, .status-criatura {
+  display: flex;
+  margin-top: 10px;
+  justify-content: space-around;
+  align-items: flex-start;
+  flex-direction: row;
+
+}
+
+.luta-vs {
+  text-align: center;
+  font-size: 30px;
+  font-weight: bold;
+  padding: 50px;
+}
+.campeao-container{
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+  border-radius: 30px;
+  padding: auto;
+}
+.criatura-container{
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+  border-radius: 30px;
+  padding: auto;
+}
+.acoes-container {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+button {
+  padding: 10px 20px;
+  border-radius: 15px;
+  background-color: var(--primary-color);
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: var(--button-hover-color);
+}
