@@ -9,13 +9,7 @@ function selecionarCampeao(nome) {
     return;
   }
   localStorage.setItem("campeaoSelecionado", JSON.stringify(campeao)); // Salvar o campeão no localStorage
-
-  // Verificar se os dados do campeão estão completos antes de redirecionar
-  if (campeao.nome && campeao.habilidades && campeao.energia) {
-    window.location.href = "/indexhistory.html";
-  } else {
-    alert("Erro: Dados do campeão estão incompletos.");
-  }
+  window.location.href = "/indexhistory.html"; // Redirecionar para a página da história
 }
 
 // Função para redirecionar para a página de criação de personagem
@@ -207,13 +201,7 @@ function comecarAventura() {
   };
 
   localStorage.setItem("campeaoSelecionado", JSON.stringify(personagemCriado));
-
-  // Verificar se os dados do personagem estão completos antes de redirecionar
-  if (personagemCriado.nome && personagemCriado.habilidades && personagemCriado.energia) {
-    window.location.href = "/indexhistory.html";
-  } else {
-    alert("Erro: Dados do personagem incompletos.");
-  }
+  window.location.href = "/indexhistory.html"; // Redirecionar para a página de história
 }
 
 // Inicializar a criação de personagem ao carregar a página
@@ -318,7 +306,7 @@ function fugir() {
   alert("Você fugiu da batalha!");
   localStorage.removeItem("criaturaAtual");
   const historiaDeOrigem = localStorage.getItem("historiaDeOrigem");
-  window.location.href = `/indexhistory.html?id=${historiaDeOrigem}`;
+  window.location.href = /indexhistory.html?id=${historiaDeOrigem};
 }
 
 // Atualizar os status de energia na tela
@@ -344,7 +332,7 @@ function verificarMorte() {
     salvarEstadoBatalha();
     const proximaHistoria = localStorage.getItem("proximaHistoria");
     if (proximaHistoria) {
-      window.location.href = `/indexhistory.html?id=${proximaHistoria}`;
+      window.location.href = /indexhistory.html?id=${proximaHistoria};
     } else {
       alert("Erro: Próxima história não encontrada.");
       window.location.href = '/indexhistory.html';
