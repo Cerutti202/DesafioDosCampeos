@@ -306,7 +306,7 @@ function fugir() {
   alert("Você fugiu da batalha!");
   localStorage.removeItem("criaturaAtual");
   const historiaDeOrigem = localStorage.getItem("historiaDeOrigem");
-  window.location.href = /history.html?id=${historiaDeOrigem};
+  window.location.href = `/history.html?id=${historiaDeOrigem}`;
 }
 
 // Atualizar os status de energia na tela
@@ -332,7 +332,7 @@ function verificarMorte() {
     salvarEstadoBatalha();
     const proximaHistoria = localStorage.getItem("proximaHistoria");
     if (proximaHistoria) {
-      window.location.href = /history.html?id=${proximaHistoria};
+      window.location.href = `/history.html?id=${proximaHistoria}`;
     } else {
       alert("Erro: Próxima história não encontrada.");
       window.location.href = '/history.html';
