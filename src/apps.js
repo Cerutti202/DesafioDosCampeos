@@ -29,7 +29,8 @@ function carregarCampeao() {
   }
 
   // Atualizar a imagem e as estatísticas do campeão
-  document.querySelector(".champion-img").src = campeao.imagem || "/assets/default-character.svg";
+  document.querySelector(".champion-img").src =
+    campeao.imagem || "/assets/default-character.svg";
   document.querySelector(".heart").textContent = campeao.energia;
   document.querySelector(".attack").textContent = campeao.habilidades;
   document.querySelector(".defense").textContent = campeao.sorte;
@@ -48,64 +49,66 @@ function carregarCampeao() {
 // Função para carregar a história com base no ID
 // Esta função é chamada em "history.html" para carregar a história inicial e todas as opções subsequentes.
 function carregarHistoria(id) {
-  const historia = historias.find((h) => h.id === id);  // Encontrar a história pelo ID
+  const historia = historias.find((h) => h.id === id); // Encontrar a história pelo ID
   if (!historia) {
     console.error("História não encontrada.");
-    return;  // Se a história não existir, sair da função
+    return; // Se a história não existir, sair da função
   }
 
-  document.querySelector(".story-text").textContent = historia.texto_base;  // Atualizar o texto da história
+  document.querySelector(".story-text").textContent = historia.texto_base; // Atualizar o texto da história
 
   const choicesDiv = document.querySelector(".choices");
-  choicesDiv.innerHTML = "";  // Limpar opções anteriores
+  choicesDiv.innerHTML = ""; // Limpar opções anteriores
 
   // Verifica se a história contém uma criatura
   if (historia.criatura) {
     // Adicionar botão para iniciar batalha
     const batalhaBtn = document.createElement("button");
     batalhaBtn.textContent = "Continuar Lutando";
-    batalhaBtn.onclick = () => iniciarBatalha(historia.criatura, historia.opcoes[0].proximaHistoria);  // Iniciar batalha ao clicar
+    batalhaBtn.onclick = () =>
+      iniciarBatalha(historia.criatura, historia.opcoes[0].proximaHistoria); // Iniciar batalha ao clicar
     choicesDiv.appendChild(batalhaBtn);
 
     // Adicionar botão para desistir da luta
     const desistirBtn = document.createElement("button");
     desistirBtn.textContent = "Desistir da Luta";
-    desistirBtn.onclick = () => carregarHistoria(historia.opcoes[1].proximaHistoria);  // Carregar história de desistência
+    desistirBtn.onclick = () =>
+      carregarHistoria(historia.opcoes[1].proximaHistoria); // Carregar história de desistência
     choicesDiv.appendChild(desistirBtn);
   } else {
-    carregarOpcoes(historia);  // Carregar as opções normalmente se não houver criatura
+    carregarOpcoes(historia); // Carregar as opções normalmente se não houver criatura
   }
 }
 
 // Função para carregar opções normais (sem criatura)
 function carregarOpcoes(historia) {
   const choicesDiv = document.querySelector(".choices");
-  choicesDiv.innerHTML = "";  // Limpar opções anteriores
+  choicesDiv.innerHTML = ""; // Limpar opções anteriores
   historia.opcoes.forEach((opcao) => {
     const btn = document.createElement("button");
     btn.textContent = opcao.texto;
     btn.className = "choice-btn";
-    btn.onclick = () => carregarHistoria(opcao.proximaHistoria);  // Carregar a próxima história ao clicar
+    btn.onclick = () => carregarHistoria(opcao.proximaHistoria); // Carregar a próxima história ao clicar
     choicesDiv.appendChild(btn);
   });
 }
 
 // Função para iniciar a batalha
 function iniciarBatalha(criatura, proximaHistoria) {
-  const criaturaSelecionada = criaturas.find(c => c.id === criatura.id); // Encontrar a criatura pelo ID
+  const criaturaSelecionada = criaturas.find((c) => c.id === criatura.id); // Encontrar a criatura pelo ID
   if (!criaturaSelecionada) {
     console.error("Criatura não encontrada.");
     return;
   }
-  localStorage.setItem("criaturaAtual", JSON.stringify(criaturaSelecionada));  // Salvar a criatura
-  localStorage.setItem("proximaHistoria", proximaHistoria);  // Salvar a próxima história para ir após a vitória
-  window.location.href = "/Batalha.html";  // Redirecionar para a batalha
+  localStorage.setItem("criaturaAtual", JSON.stringify(criaturaSelecionada)); // Salvar a criatura
+  localStorage.setItem("proximaHistoria", proximaHistoria); // Salvar a próxima história para ir após a vitória
+  window.location.href = "/Batalha.html"; // Redirecionar para a batalha
 }
 
 // Carregar a primeira história ao carregar a página de história
 document.addEventListener("DOMContentLoaded", () => {
   const params = new URLSearchParams(window.location.search);
-  const historiaInicial = parseInt(params.get('id')) || 1; // ID da história inicial, pegar de URL se disponível e garantir que seja um número
+  const historiaInicial = parseInt(params.get("id")) || 1; // ID da história inicial, pegar de URL se disponível e garantir que seja um número
   if (isNaN(historiaInicial)) {
     console.error("ID de história inválido.");
     return;
@@ -231,7 +234,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const habilidadeCriaturaElem = document.getElementById("habilidadeCriatura");
   const imagemCriaturaElem = document.getElementById("imagemCriatura");
 
-  if (!energiaCampeaoElem || !habilidadeCampeaoElem || !energiaCriaturaElem || !habilidadeCriaturaElem || !imagemCriaturaElem) {
+  if (
+    !energiaCampeaoElem ||
+    !habilidadeCampeaoElem ||
+    !energiaCriaturaElem ||
+    !habilidadeCriaturaElem ||
+    !imagemCriaturaElem
+  ) {
     console.error("Elementos da batalha não foram encontrados no DOM.");
     return;
   }
@@ -306,7 +315,7 @@ function fugir() {
   alert("Você fugiu da batalha!");
   localStorage.removeItem("criaturaAtual");
   const historiaDeOrigem = localStorage.getItem("historiaDeOrigem");
-  window.location.href = `/history.html?id=${historiaDeOrigem}`;
+  window.location.href = "/history.html?id=${historiaDeOrigem}";
 }
 
 // Atualizar os status de energia na tela
@@ -332,10 +341,10 @@ function verificarMorte() {
     salvarEstadoBatalha();
     const proximaHistoria = localStorage.getItem("proximaHistoria");
     if (proximaHistoria) {
-      window.location.href = `/history.html?id=${proximaHistoria}`;
+      window.location.href = "/history.html?id=${proximaHistoria}";
     } else {
       alert("Erro: Próxima história não encontrada.");
-      window.location.href = '/history.html';
+      window.location.href = "/history.html";
     }
   }
 }
