@@ -1,6 +1,6 @@
 // =========== SELEÇÃO DE CAMPEÃO ===========
 // Função para salvar o campeão escolhido no localStorage
-// Esta função é chamada na página "indexCS.html" ou "indexMP.html"
+// Esta função é chamada na página "CS.html" ou "MP.html"
 // quando o usuário seleciona um campeão.
 function selecionarCampeao(nome) {
   const campeao = campeoes.find((c) => c.nome === nome); // Encontrar o campeão pelo nome
@@ -9,18 +9,18 @@ function selecionarCampeao(nome) {
     return;
   }
   localStorage.setItem("campeaoSelecionado", JSON.stringify(campeao)); // Salvar o campeão no localStorage
-  window.location.href = "/indexhistory.html"; // Redirecionar para a página da história
+  window.location.href = "/history.html"; // Redirecionar para a página da história
 }
 
 // Função para redirecionar para a página de criação de personagem
-// Esta função é chamada no botão "Criar seu personagem" em "indexMP.html".
+// Esta função é chamada no botão "Criar seu personagem" em "MP.html".
 function criarPersonagem() {
-  window.location.href = "/indexMP.html"; // Página de criação de personagem
+  window.location.href = "/MP.html"; // Página de criação de personagem
 }
 
 // =========== CARREGAR CAMPEÃO NA PÁGINA DE HISTÓRIA ===========
 // Função para carregar o campeão na página de história
-// Esta função é chamada em "indexhistory.html" para exibir os status do campeão na barra lateral.
+// Esta função é chamada em "history.html" para exibir os status do campeão na barra lateral.
 function carregarCampeao() {
   const campeao = JSON.parse(localStorage.getItem("campeaoSelecionado")); // Pega o campeão salvo no localStorage
   if (!campeao) {
@@ -46,7 +46,7 @@ function carregarCampeao() {
 
 // =========== CARREGAR HISTÓRIA E VERIFICAR CRIATURAS ===========
 // Função para carregar a história com base no ID
-// Esta função é chamada em "indexhistory.html" para carregar a história inicial e todas as opções subsequentes.
+// Esta função é chamada em "history.html" para carregar a história inicial e todas as opções subsequentes.
 function carregarHistoria(id) {
   const historia = historias.find((h) => h.id === id);  // Encontrar a história pelo ID
   if (!historia) {
@@ -99,7 +99,7 @@ function iniciarBatalha(criatura, proximaHistoria) {
   }
   localStorage.setItem("criaturaAtual", JSON.stringify(criaturaSelecionada));  // Salvar a criatura
   localStorage.setItem("proximaHistoria", proximaHistoria);  // Salvar a próxima história para ir após a vitória
-  window.location.href = "/indexBatalha.html";  // Redirecionar para a batalha
+  window.location.href = "/Batalha.html";  // Redirecionar para a batalha
 }
 
 // Carregar a primeira história ao carregar a página de história
@@ -201,7 +201,7 @@ function comecarAventura() {
   };
 
   localStorage.setItem("campeaoSelecionado", JSON.stringify(personagemCriado));
-  window.location.href = "/indexhistory.html"; // Redirecionar para a página de história
+  window.location.href = "/history.html"; // Redirecionar para a página de história
 }
 
 // Inicializar a criação de personagem ao carregar a página
@@ -220,7 +220,7 @@ let proximaHistoria = localStorage.getItem("proximaHistoria"); // Pega a próxim
 
 if (!campeao || !criatura) {
   alert("Erro: Dados do campeão ou da criatura não encontrados!");
-  window.location.href = "/indexhistory.html"; // Redirecionar de volta à história se houver erro
+  window.location.href = "/history.html"; // Redirecionar de volta à história se houver erro
 }
 
 // Atualizar os status iniciais na tela de batalha
@@ -306,7 +306,7 @@ function fugir() {
   alert("Você fugiu da batalha!");
   localStorage.removeItem("criaturaAtual");
   const historiaDeOrigem = localStorage.getItem("historiaDeOrigem");
-  window.location.href = /indexhistory.html?id=${historiaDeOrigem};
+  window.location.href = /history.html?id=${historiaDeOrigem};
 }
 
 // Atualizar os status de energia na tela
@@ -332,10 +332,10 @@ function verificarMorte() {
     salvarEstadoBatalha();
     const proximaHistoria = localStorage.getItem("proximaHistoria");
     if (proximaHistoria) {
-      window.location.href = /indexhistory.html?id=${proximaHistoria};
+      window.location.href = /history.html?id=${proximaHistoria};
     } else {
       alert("Erro: Próxima história não encontrada.");
-      window.location.href = '/indexhistory.html';
+      window.location.href = '/history.html';
     }
   }
 }
