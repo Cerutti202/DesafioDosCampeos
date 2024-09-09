@@ -1,7 +1,5 @@
 // =========== SELEÇÃO DE CAMPEÃO ===========
 // Função para salvar o campeão escolhido no localStorage
-// Esta função é chamada na página "CS.html" ou "MP.html"
-// quando o usuário seleciona um campeão.
 function selecionarCampeao(nome) {
   const campeao = campeoes.find((c) => c.nome === nome); // Encontrar o campeão pelo nome
   if (!campeao) {
@@ -13,19 +11,17 @@ function selecionarCampeao(nome) {
 }
 
 // Função para redirecionar para a página de criação de personagem
-// Esta função é chamada no botão "Criar seu personagem" em "MP.html".
 function criarPersonagem() {
   window.location.href = "/MP.html"; // Página de criação de personagem
 }
 
 // =========== CARREGAR CAMPEÃO NA PÁGINA DE HISTÓRIA ===========
-// Função para carregar o campeão na página de história
-// Esta função é chamada em "history.html" para exibir os status do campeão na barra lateral.
+// Função que é chamada apenas quando a página de história é carregada
 function carregarCampeao() {
   const campeao = JSON.parse(localStorage.getItem("campeaoSelecionado")); // Pega o campeão salvo no localStorage
   if (!campeao) {
-    console.error("Nenhum campeão salvo no localStorage.");
-    return; // Se não tiver campeão, sair da função
+    console.warn("Nenhum campeão salvo no localStorage. Selecione um campeão.");
+    return; // Se não tiver campeão, não faz nada
   }
 
   // Atualizar a imagem e as estatísticas do campeão
@@ -37,17 +33,18 @@ function carregarCampeao() {
 
   // Carregar os equipamentos do campeão
   const ul = document.querySelector(".champion-items ul");
-  ul.innerHTML = ""; // Limpar lista anterior
-  campeao.equipamentos.forEach((eq) => {
-    const li = document.createElement("li");
-    li.textContent = eq.nome;
-    ul.appendChild(li);
-  });
+  if (ul) {
+    ul.innerHTML = ""; // Limpar lista anterior
+    campeao.equipamentos.forEach((eq) => {
+      const li = document.createElement("li");
+      li.textContent = eq.nome;
+      ul.appendChild(li);
+    });
+  }
 }
 
 // =========== CARREGAR HISTÓRIA E VERIFICAR CRIATURAS ===========
-// Função para carregar a história com base no ID
-// Esta função é chamada em "history.html" para carregar a história inicial e todas as opções subsequentes.
+// Função para carregar a história
 function carregarHistoria(id) {
   const historia = historias.find((h) => h.id === id); // Encontrar a história pelo ID
   if (!historia) {
@@ -60,16 +57,14 @@ function carregarHistoria(id) {
   const choicesDiv = document.querySelector(".choices");
   choicesDiv.innerHTML = ""; // Limpar opções anteriores
 
-  // Verifica se a história contém uma criatura
+  // Verifica se a história contém uma criatura para iniciar batalha
   if (historia.criatura) {
-    // Adicionar botão para iniciar batalha
     const batalhaBtn = document.createElement("button");
     batalhaBtn.textContent = "Continuar Lutando";
     batalhaBtn.onclick = () =>
       iniciarBatalha(historia.criatura, historia.opcoes[0].proximaHistoria); // Iniciar batalha ao clicar
     choicesDiv.appendChild(batalhaBtn);
 
-    // Adicionar botão para desistir da luta
     const desistirBtn = document.createElement("button");
     desistirBtn.textContent = "Desistir da Luta";
     desistirBtn.onclick = () =>
@@ -83,6 +78,8 @@ function carregarHistoria(id) {
 // Função para carregar opções normais (sem criatura)
 function carregarOpcoes(historia) {
   const choicesDiv = document.querySelector(".choices");
+  if (!choicesDiv) return;
+
   choicesDiv.innerHTML = ""; // Limpar opções anteriores
   historia.opcoes.forEach((opcao) => {
     const btn = document.createElement("button");
@@ -93,7 +90,7 @@ function carregarOpcoes(historia) {
   });
 }
 
-// Função para iniciar a batalha
+// Função para iniciar a batalha e redirecionar para a página de batalha
 function iniciarBatalha(criatura, proximaHistoria) {
   const criaturaSelecionada = criaturas.find((c) => c.id === criatura.id); // Encontrar a criatura pelo ID
   if (!criaturaSelecionada) {
@@ -108,12 +105,13 @@ function iniciarBatalha(criatura, proximaHistoria) {
 // Carregar a primeira história ao carregar a página de história
 document.addEventListener("DOMContentLoaded", () => {
   const params = new URLSearchParams(window.location.search);
-  const historiaInicial = parseInt(params.get("id")) || 1; // ID da história inicial, pegar de URL se disponível e garantir que seja um número
+  const historiaInicial = parseInt(params.get("id")) || 1; // ID da história inicial, pegar de URL se disponível
   if (isNaN(historiaInicial)) {
     console.error("ID de história inválido.");
     return;
   }
-  carregarCampeao(); // Carregar o campeão no painel
+
+  carregarCampeao(); // Carregar o campeão somente se já foi selecionado
   carregarHistoria(historiaInicial); // Carregar a primeira história
 });
 
@@ -217,41 +215,41 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // =========== LÓGICA DE BATALHA ===========
 
-let campeao = JSON.parse(localStorage.getItem("campeaoSelecionado")); // Pega o campeão do localStorage
-let criatura = JSON.parse(localStorage.getItem("criaturaAtual")); // Pega a criatura do localStorage
-let proximaHistoria = localStorage.getItem("proximaHistoria"); // Pega a próxima história após a batalha
+// funçaão para aplicar a animação de danos
+function aplicarAnimacaoDano(elemento) {
+  elemento.classList.add("hit-effect", "shake-effect");
 
-if (!campeao || !criatura) {
-  alert("Erro: Dados do campeão ou da criatura não encontrados!");
-  window.location.href = "/history.html"; // Redirecionar de volta à história se houver erro
+  // Remove as classes de animação após 500ms (tempo da animação)
+  setTimeout(() => {
+    elemento.classList.remove("hit-effect", "shake-effect");
+  }, 500);
 }
 
-// Atualizar os status iniciais na tela de batalha
+// Função que é chamada quando a página de batalha é carregada
 document.addEventListener("DOMContentLoaded", () => {
-  const energiaCampeaoElem = document.getElementById("energiaCampeao");
-  const habilidadeCampeaoElem = document.getElementById("habilidadeCampeao");
-  const energiaCriaturaElem = document.getElementById("energiaCriatura");
-  const habilidadeCriaturaElem = document.getElementById("habilidadeCriatura");
-  const imagemCriaturaElem = document.getElementById("imagemCriatura");
+  if (window.location.pathname.includes("Batalha.html")) {
+    const campeao = JSON.parse(localStorage.getItem("campeaoSelecionado"));
+    const criatura = JSON.parse(localStorage.getItem("criaturaAtual"));
+    const proximaHistoria = localStorage.getItem("proximaHistoria");
 
-  if (
-    !energiaCampeaoElem ||
-    !habilidadeCampeaoElem ||
-    !energiaCriaturaElem ||
-    !habilidadeCriaturaElem ||
-    !imagemCriaturaElem
-  ) {
-    console.error("Elementos da batalha não foram encontrados no DOM.");
-    return;
+    if (!campeao || !criatura) {
+      alert("Erro: Dados do campeão ou da criatura não encontrados!");
+      window.location.href = "/history.html"; // Redirecionar de volta à história se houver erro
+      return;
+    }
+
+    // Atualiza os status iniciais da tela de batalha
+    document.getElementById("energiaCampeao").textContent = campeao.energia;
+    document.getElementById("habilidadeCampeao").textContent =
+      campeao.habilidades;
+    document.getElementById("energiaCriatura").textContent = criatura.energia;
+    document.getElementById("habilidadeCriatura").textContent =
+      criatura.habilidade;
+    document.getElementById("imagemCriatura").src = criatura.referencia_imagem;
+
+    // Salva o estado da batalha no localStorage
+    salvarEstadoBatalha();
   }
-
-  energiaCampeaoElem.textContent = campeao.energia;
-  habilidadeCampeaoElem.textContent = campeao.habilidades;
-  energiaCriaturaElem.textContent = criatura.energia;
-  habilidadeCriaturaElem.textContent = criatura.habilidade;
-  imagemCriaturaElem.src = criatura.referencia_imagem;
-
-  salvarEstadoBatalha();
 });
 
 // Função para gerar número aleatório entre 1 e 6
@@ -261,6 +259,9 @@ function rolarDados() {
 
 // Função de combate (ataque) chamada ao clicar no botão "Atacar"
 function atacar() {
+  const campeao = JSON.parse(localStorage.getItem("campeaoSelecionado"));
+  const criatura = JSON.parse(localStorage.getItem("criaturaAtual"));
+
   let ataqueCampeao = rolarDados() + rolarDados() + campeao.habilidades;
   let ataqueCriatura = rolarDados() + rolarDados() + criatura.habilidade;
 
@@ -270,26 +271,31 @@ function atacar() {
   if (ataqueCampeao > ataqueCriatura) {
     criatura.energia -= 2;
     alert("Você feriu a criatura!");
+    aplicarAnimacaoDano(document.querySelector(".criatura-container")); // Aplica animação no card da criatura
   } else if (ataqueCampeao < ataqueCriatura) {
     campeao.energia -= 2;
     alert("A criatura te feriu!");
+    aplicarAnimacaoDano(document.querySelector(".campeao-container")); // Aplica animação no card do campeão
   } else {
     alert("Ninguém se feriu nessa rodada.");
   }
 
-  atualizarStatus();
+  atualizarStatus(campeao, criatura);
   salvarEstadoBatalha();
   verificarMorte();
 }
 
-// Função para usar Sorte
+// Função para usar Sorte durante a batalha
 function usarSorte() {
+  const campeao = JSON.parse(localStorage.getItem("campeaoSelecionado"));
+  const criatura = JSON.parse(localStorage.getItem("criaturaAtual"));
+
   if (campeao.sorte <= 0) {
     alert("Você está sem sorte!");
     return;
   }
 
-  campeao.sorte--; // Consome 1 de sorte
+  campeao.sorte--;
 
   let ataqueCampeao = rolarDados() + rolarDados() + campeao.habilidades;
   let ataqueCriatura = rolarDados() + rolarDados() + criatura.habilidade;
@@ -298,53 +304,92 @@ function usarSorte() {
   document.getElementById("forcaCriatura").textContent = ataqueCriatura;
 
   if (ataqueCampeao > ataqueCriatura) {
-    criatura.energia -= 4; // Dano maior com sorte
+    criatura.energia -= 4;
     alert("Você usou sorte e causou grande dano!");
+    aplicarAnimacaoDano(document.querySelector(".criatura-container")); // Aplica animação no card da criatura
   } else {
-    campeao.energia -= 1; // Dano reduzido
+    campeao.energia -= 1;
     alert("Você usou sorte, mas foi ferido levemente.");
+    aplicarAnimacaoDano(document.querySelector(".campeao-container")); // Aplica animação no card do campeão
   }
 
-  atualizarStatus();
+  atualizarStatus(campeao, criatura);
   salvarEstadoBatalha();
   verificarMorte();
 }
 
-// Função para fugir da batalha chamada ao clicar no botão "Fugir"
+// Função para fugir da batalha
 function fugir() {
   alert("Você fugiu da batalha!");
-  localStorage.removeItem("criaturaAtual");
+  localStorage.removeItem("criaturaAtual"); // Remove a criatura do localStorage
   const historiaDeOrigem = localStorage.getItem("historiaDeOrigem");
-  window.location.href = "/history.html?id=${historiaDeOrigem}";
+
+  if (historiaDeOrigem) {
+    window.location.href = `/history.html?id=${historiaDeOrigem}`; // Redireciona de volta à história de origem
+  } else {
+    window.location.href = "/history.html"; // Redireciona para a página principal da história
+  }
 }
 
-// Atualizar os status de energia na tela
-function atualizarStatus() {
+// Função para atualizar os status de energia na tela e no localStorage
+function atualizarStatus(campeao, criatura) {
+  if (!campeao || !criatura) {
+    console.error(
+      "Erro: Dados do campeão ou da criatura não estão disponíveis."
+    );
+    return;
+  }
+
+  // Atualiza os elementos da interface
   document.getElementById("energiaCampeao").textContent = campeao.energia;
   document.getElementById("energiaCriatura").textContent = criatura.energia;
-}
 
-// Função para salvar o estado da batalha (campeão e criatura)
-function salvarEstadoBatalha() {
+  // Atualiza os dados no localStorage
   localStorage.setItem("campeaoSelecionado", JSON.stringify(campeao));
   localStorage.setItem("criaturaAtual", JSON.stringify(criatura));
-  localStorage.setItem("proximaHistoria", proximaHistoria);
 }
 
-// Verificar se alguém morreu e finalizar a batalha
+// Função para salvar o estado da batalha (campeão e criatura) no localStorage
+function salvarEstadoBatalha() {
+  const campeao = JSON.parse(localStorage.getItem("campeaoSelecionado"));
+  const criatura = JSON.parse(localStorage.getItem("criaturaAtual"));
+
+  if (!campeao || !criatura) {
+    console.error(
+      "Erro: Dados do campeão ou da criatura não estão disponíveis para salvar."
+    );
+    return;
+  }
+
+  localStorage.setItem("campeaoSelecionado", JSON.stringify(campeao));
+  localStorage.setItem("criaturaAtual", JSON.stringify(criatura));
+}
+
+// Função para verificar se o campeão ou a criatura morreu
 function verificarMorte() {
+  const campeao = JSON.parse(localStorage.getItem("campeaoSelecionado"));
+  const criatura = JSON.parse(localStorage.getItem("criaturaAtual"));
+
+  if (!campeao || !criatura) {
+    console.error(
+      "Erro: Dados do campeão ou da criatura não estão disponíveis para verificação."
+    );
+    return;
+  }
+
   if (campeao.energia <= 0) {
     alert("Você morreu! Fim de jogo.");
-    window.location.href = "/gameover.html";
+    window.location.href = "/gameover.html"; // Redireciona para a página de game over
   } else if (criatura.energia <= 0) {
     alert("Você venceu a criatura!");
-    salvarEstadoBatalha();
+    salvarEstadoBatalha(); // Salva o estado final antes de continuar
+
     const proximaHistoria = localStorage.getItem("proximaHistoria");
     if (proximaHistoria) {
-      window.location.href = "/history.html?id=${proximaHistoria}";
+      window.location.href = `/history.html?id=${proximaHistoria}`; // Redireciona para a próxima história
     } else {
       alert("Erro: Próxima história não encontrada.");
-      window.location.href = "/history.html";
+      window.location.href = "/history.html"; // Redireciona de volta à página principal da história
     }
   }
 }
