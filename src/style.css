@@ -432,13 +432,13 @@ select {
   height: auto;
 }
 
-.status-campeao, .status-criatura {
+.status-campeao,
+.status-criatura {
   display: flex;
   margin-top: 10px;
   justify-content: space-around;
   align-items: flex-start;
   flex-direction: row;
-
 }
 
 .luta-vs {
@@ -447,13 +447,13 @@ select {
   font-weight: bold;
   padding: 50px;
 }
-.campeao-container{
+.campeao-container {
   background-color: var(--primary-color);
   color: var(--secondary-color);
   border-radius: 30px;
   padding: auto;
 }
-.criatura-container{
+.criatura-container {
   background-color: var(--primary-color);
   color: var(--secondary-color);
   border-radius: 30px;
@@ -476,4 +476,42 @@ button {
 
 button:hover {
   background-color: var(--button-hover-color);
+}
+
+/* Efeito de piscar em vermelho */
+.hit-effect {
+  animation: hitFlash 0.5s ease;
+}
+
+@keyframes hitFlash {
+  0% {
+    background-color: transparent;
+  }
+  50% {
+    background-color: red;
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
+/* Efeito de tremer */
+.shake-effect {
+  animation: shake 0.5s ease;
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  50% {
+    transform: translateX(5px);
+  }
+  75% {
+    transform: translateX(-5px);
+  }
 }
