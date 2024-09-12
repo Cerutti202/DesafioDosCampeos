@@ -89,7 +89,7 @@ Incluí esse diagrama para fornecer uma visão clara da organização do código
 
 ### Fluxo do Sistema de Batalha
 
-![diagram (2).png](./img_read.me/diagram_(2).png)
+![diagram (2).png](./img_read.me/diagram_(5).png)
 
 **Objetivo**:
 
