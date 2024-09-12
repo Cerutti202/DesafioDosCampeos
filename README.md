@@ -159,5 +159,5 @@ Agradeço à Alura e ao Gemini pela oportunidade de aprendizado. Este projeto re
 
 ## 10. Contatos
 
-- **LinkedIn**: [Seu LinkedIn](https://www.linkedin.com/in/kaiocerutti/)
-- **GitHub**: [Seu GitHub](https://github.com/Cerutti202)
+- **LinkedIn**: [KAIO CERUTTI](https://www.linkedin.com/in/kaiocerutti/)
+- **GitHub**: [Cerutti202](https://github.com/Cerutti202)
